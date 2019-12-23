@@ -1,38 +1,36 @@
-class Titanic:
+import pandas as pd
+
+class Model:
     def __init__(self):
         self._context = None
         self._fname = None
         self._train = None
         self._test = None
-        self._testID = None
+        self._testId = None
 
     @property
-    def context(self) -> object: return self._context
-
-    @property
-    def fname(self)-> object: return self._fname
-
-    @property
-    def train(self)-> object: return self._train
-
-    @property
-    def test(self)-> object: return self._test
-
-    @property
-    def testID(self)-> object: return self._testID
-
+    def context(self) -> str: return self._context
     @context.setter
     def context(self, context): self._context = context
 
+    @property
+    def fname(self) -> str: return self._fname
     @fname.setter
     def fname(self, fname): self._fname = fname
 
+    @property
+    def train(self) -> str: return self._train
     @train.setter
-    def train(self, train): self._train = train
+    def train(self,train): self._train = train
 
+    @property
+    def test(self) -> str : return self._test
     @test.setter
-    def test(self, test): self.test = test
+    def test(self, test): self._test = test
 
-    @testID.setter
-    def testID(self, testID): self.testID = testID
+    @property
+    def testId(self) -> object: return self._testId
+    @testId.setter
+    def testId(self,testId): self._testId = testId
+
 
