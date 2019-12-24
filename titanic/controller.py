@@ -18,28 +18,27 @@ class Controller:
         return self._service.new_model(fname)
 
 
-    def create_model2(self) -> object:
+    def preprocess(self, param) -> object: # 재사용성을 생각해야한다.
         print('----------------1. Cabin Ticket 삭제 -----------------------')
-        dframe = self.drop_feature(dframe, 'Cabin')
-        dframe = self.drop_feature(dframe, 'Ticket')
+        result = self._service.drop_feature(param, 'Cabin')
+        result = self._service.drop_feature(result, 'Ticket')
         print('----------------2. embarked	승선한 항구명 norminal 편집-----------------------')
-        dframe = self.embarked_norminal(dframe)
+        result = self._service.embarked_norminal(result)
         print('----------------3. Title 편집 -----------------------')
-        dframe = self.title_norminal(dframe)
+        result = self._service.title_norminal(result)
         print('----------------4. Name,PassengerId 삭제 -----------------------')
-        dframe = self.drop_feature(dframe, 'Name')
-        # self._test_id = test['PassengerId']
-        dframe = self.drop_feature(dframe, 'PassengerId')
+        result = self._service.drop_feature(result, 'Name')
+        result = self._service.drop_feature(result, 'PassengerId')
         print('----------------5. Age 편집 -----------------------')
-        dframe = self.age_ordinal(dframe)
+        result = self._service.age_ordinal(result)
         print('----------------6. Fare ordinal 편집 -----------------------')
-        dframe = self.fare_ordinal(dframe)
+        result = self._service.fare_ordinal(result)
         print('----------------7. Fare 삭제 -----------------------')
-        dframe = self.drop_feature(dframe, 'Fare')
+        result = self._service.drop_feature(result, 'Fare')
         print('----------------7. Sex norminal 편집 -----------------------')
-        dframe = self.sex_norminal(dframe)
-        dframe = dframe.fillna({"FareBand": 1})
-        return dframe
+        result = self._service.sex_norminal(result)
+        result = result.fillna({"FareBand": 1})
+        return result
 
     def create_dummy(self) -> object:
         train = self._train

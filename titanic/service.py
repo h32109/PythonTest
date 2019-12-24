@@ -34,42 +34,14 @@ class Service:
         model.fname=param
         return pd.read_csv(model.context+'/'+model.fname)
 
-    """
-    def hook_process(self, train, test) -> object:
-        print('----------------1. Cabin Ticket 삭제 -----------------------')
-        t = self.drop_feature(train, test, 'Cabin')
-        t = self.drop_feature(t[0], t[1], 'Ticket')
-        print('----------------2. embarked	승선한 항구명 norminal 편집-----------------------')
-        t = self.embarked_norminal(t[0], t[1])
-        print('----------------3. Title 편집 -----------------------')
-        t = self.title_norminal(t[0], t[1])
-        print('----------------4. Name,PassengerId 삭제 -----------------------')
-        t = self.drop_feature(t[0], t[1], 'Name')
-        self._test_id = test['PassengerId']
-        t = self.drop_feature(t[0], t[1], 'PassengerId')
-        print('----------------5. Age 편집 -----------------------')
-        t = self.age_ordinal(t[0], t[1])
-        print('----------------6. Fare ordinal 편집 -----------------------')
-        t = self.fare_ordinal(t[0], t[1])
-        print('----------------7. Fare 삭제 -----------------------')
-        t = self.drop_feature(t[0], t[1], 'Fare')
-        print('----------------7. Sex norminal 편집 -----------------------')
-        t = self.sex_norminal(t[0], t[1])
-        t[1] = t[1].fillna({"FareBand": 1})
-        a = self.null_sum(t[1])
-        print('널의 수량 {} 개'.format(a))
-        self._test = t[1]
-        return t[0]
-    """
     @staticmethod
     def null_sum(param) -> int:
         return param.isnull().sum()
 
     @staticmethod
-    def drop_feature(train, test, feature) -> []:
-        train = train.drop([feature], axis=1)
-        test = test.drop([feature], axis=1)
-        return [train, test]
+    def drop_feature(param, feature) -> []:
+        param = param.drop([feature], axis=1)
+        return param
 
     @staticmethod
     def embarked_norminal(param) -> object:
@@ -138,10 +110,9 @@ class Service:
         return dframe
 
     @staticmethod
-    def fare_ordinal(train, test) -> []:
-        train['FareBand'] = pd.qcut(train['Fare'], 4, labels={1, 2, 3, 4})
-        test['FareBand'] = pd.qcut(test['Fare'], 4, labels={1, 2, 3, 4})
-        return [train, test]
+    def fare_ordinal(param) -> []:
+        param['FareBand'] = pd.qcut(param['Fare'], 4, labels={1, 2, 3, 4})
+        return param
 
     # 검증 알고리즘 작성
 

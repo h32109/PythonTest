@@ -24,6 +24,10 @@ if __name__ == '__main__':
             elif menu == '2':
                 vue.plot_sex()
         if menu == '2':
-            pass
+            app = Controller()
+            train = app.create_model('train.csv')
+            print(train)
+            train = app.preprocess('train.csv')
+            print(train)
         elif menu == '0':
             break
