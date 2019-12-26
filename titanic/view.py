@@ -1,43 +1,45 @@
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rc
 import seaborn as sns
+from titanic.service import Service
 from titanic.model import Model
 
-#한글 깨짐을 막기 위한 설정. 한글 폰트 없기 때문에 다운로드를 받아야 함. 지원되는 폰트가 정해져 있음.
-rc('font', family =
-   font_manager
+rc('font', family=
+font_manager
    .FontProperties(fname='C:/Users/bit/AppData/Local/Microsoft/Windows/Fonts/H2GTRE.ttf')
    .get_name())
 
+
 class View:
-    def __init__(self, model):
-        self._model = model
+    def __init__(self, fname):
+        service = Service()
+        self._model = service.new_model(fname)
 
     def plot_survived_dead(self):
-        model = self._model
+        this = self._model
         f, ax = plt.subplots(1, 2, figsize=(18, 8))
-        model['Survived'] \
-            .value_counts() \
-            .plot.pie(explode=[0, 0.1],
-                      autopct='%1.1f%%',
-                      ax=ax[0],
-                      shadow=True) # 0은 가로 ax는 가로축 , shadow는 그림 상
-        ax[0].set_title('0.사망자 VS 1.생존자')
-        ax[0].set_ylabel('')
-        ax[1].set_title('0.사망자 VS 1.생존자')
-        sns.countplot('Survived', data=model, ax=ax[1])
-        plt.show()
-
-    def plot_sex(self):
-        model = self._model
-        f, ax = plt.subplots(1, 2, figsize=(18, 8))
-        model['Survived'][model['Sex'] == 'male'] \
+        this['Survived'] \
             .value_counts() \
             .plot.pie(explode=[0, 0.1],
                       autopct='%1.1f%%',
                       ax=ax[0],
                       shadow=True)
-        model['Survived'][model['Sex'] == 'female'] \
+        ax[0].set_title('0.사망자 VS 1.생존자')
+        ax[0].set_ylabel('')
+        ax[1].set_title('0.사망자 VS 1.생존자')
+        sns.countplot('Survived', data=this, ax=ax[1])
+        plt.show()
+
+    def plot_sex(self):
+        this = self._model
+        f, ax = plt.subplots(1, 2, figsize=(18, 8))
+        this['Survived'][this['Sex'] == 'male'] \
+            .value_counts() \
+            .plot.pie(explode=[0, 0.1],
+                      autopct='%1.1f%%',
+                      ax=ax[0],
+                      shadow=True)
+        this['Survived'][this['Sex'] == 'female'] \
             .value_counts() \
             .plot.pie(explode=[0, 0.1],
                       autopct='%1.1f%%',

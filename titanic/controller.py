@@ -1,52 +1,56 @@
 from titanic.service import Service
-from titanic.view import View
-
+from titanic.model import Model
 class Controller:
     def __init__(self):
         self._service = Service()
-        self._list = []
-
-    @property
-    def list(self) -> object:
-        return self._list
-
-    @list.setter
-    def list(self, list):
-        self._list = list
-
-    def create_model(self, fname) -> object:
-        return self._service.new_model(fname)
+        self._model = Model()
 
 
-    def preprocess(self, param) -> object: # 재사용성을 생각해야한다.
-        print('----------------1. Cabin Ticket 삭제 -----------------------')
-        result = self._service.drop_feature(param, 'Cabin')
-        result = self._service.drop_feature(result, 'Ticket')
-        print('----------------2. embarked	승선한 항구명 norminal 편집-----------------------')
-        result = self._service.embarked_norminal(result)
-        print('----------------3. Title 편집 -----------------------')
-        result = self._service.title_norminal(result)
-        print('----------------4. Name,PassengerId 삭제 -----------------------')
-        result = self._service.drop_feature(result, 'Name')
-        result = self._service.drop_feature(result, 'PassengerId')
-        print('----------------5. Age 편집 -----------------------')
-        result = self._service.age_ordinal(result)
-        print('----------------6. Fare ordinal 편집 -----------------------')
-        result = self._service.fare_ordinal(result)
-        print('----------------7. Fare 삭제 -----------------------')
-        result = self._service.drop_feature(result, 'Fare')
-        print('----------------7. Sex norminal 편집 -----------------------')
-        result = self._service.sex_norminal(result)
-        result = result.fillna({"FareBand": 1})
-        return result
+    def preprocess(self, train, test) -> object:
+        service = self._service
+        this = self._model
+        this.train = service.new_model(train)
+        this.test = service.new_model(test)
+        this.id = this.test['PassengerId']
+        this = service.drop_feature(this, 'Cabin')
+        this = service.drop_feature(this, 'Ticket')
+        this = service.embarked_norminal(this)
+        this = service.title_nominal(this)
+        this = service.drop_feature(this, 'Name')
+        this = service.drop_feature(this, 'PassengerId')
+        this = service.age_ordinal(this)
+        this = service.drop_feature(this, 'Fare')
+        this = service.sex_nominal(this)
+        this = service.fareBand_norminal(this)
+        print('트레인 컬럼 {}'.format(this.test.columns))
+        print('널의 수량 {}  개'.format(this.test.isnull().sum()))
+        return this
 
-    def create_dummy(self) -> object:
-        train = self._train
-        dummy = train['Survived']
-        return dummy
 
-    def test_all(self):
-        model = self.create_model()
-        dummy = self.create_dummy()
-        m = self._m
-        m.hook_test(model, dummy)
+    def modeling(self,train, test):
+        service = self._service
+        this = self.preprocess(train, test)
+        this.dummy = service.create_dummy(this)
+        this.train = service.create_train(this)
+        this.kfold = service.create_kfold()
+        this.context = './data'
+        print('<<<< MODELING SUCCESS >>>>')
+        return this
+
+
+    def learning(self, train, test):
+        service = self._service
+        this = self.modeling(train, test)
+        print('KNN 활용한 검증 정확도 {} %'.format(service.accuracy_by_knn(this)))
+        print('결정트리 활용한 검증 정확도 {} %'.format(service.accuracy_by_dtree(this)))
+        print('랜덤포리스트 활용한 검증 정확도 {} %'.format(service.accuracy_by_rforest(this)))
+        print('나이브베이즈 활용한 검증 정확도 {} %'.format(service.accuracy_by_nb(this)))
+        print('SVM 활용한 검증 정확도 {} %'.format(service.accuracy_by_svm(this)))
+        print('<<<< TEST SUCCESS >>>>')
+
+
+    def submit(self, train, test):
+        service = self._service
+        this = self.modeling(train, test)
+        service.submit(this)
+        print('<<<< SUBMIT SUCCESS >>>>')

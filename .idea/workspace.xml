@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f458b632-28a0-4304-9bdb-f309381c344b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/kbstar/view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kbstar/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kbstar/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kbstar/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/titanic/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/titanic/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/titanic/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/titanic/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,33 +128,37 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="739" height="166" key="GridCell.Tab.0.bottom" timestamp="1577177739287">
+    <state width="739" height="166" key="GridCell.Tab.0.bottom" timestamp="1577319014959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577177739287" />
-    <state width="739" height="166" key="GridCell.Tab.0.center" timestamp="1577177739287">
+    <state width="739" height="166" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014959" />
+    <state width="739" height="166" key="GridCell.Tab.0.center" timestamp="1577319014958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577177739287" />
-    <state width="739" height="166" key="GridCell.Tab.0.left" timestamp="1577177739287">
+    <state width="739" height="166" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
+    <state width="739" height="166" key="GridCell.Tab.0.left" timestamp="1577319014958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577177739287" />
-    <state width="739" height="166" key="GridCell.Tab.0.right" timestamp="1577177739287">
+    <state width="739" height="166" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
+    <state width="739" height="166" key="GridCell.Tab.0.right" timestamp="1577319014958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577177739287" />
-    <state x="657" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1577145894400">
+    <state width="739" height="166" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
+    <state x="657" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1577318660426">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="657" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577145894400" />
+    <state x="657" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577318660426" />
+    <state x="764" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577319823862">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="764" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1577319823862" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/kbstar/__init__.py</url>
-          <line>12</line>
+          <line>13</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

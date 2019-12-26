@@ -1,7 +1,7 @@
+
 from titanic.model import Model
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -9,179 +9,224 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
-
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 """
-['PassengerId' 고객ID, 
+['PassengerId' 고객ID,
 'Survived', 생존여부
 'Pclass', 승선권 1 = 1st 2 = 2nd 3 = 3rd
-'Name', 
-'Sex', 
-'Age', 
+'Name',
+'Sex',
+'Age',
 'SibSp',동반한 형제, 자매, 배우자
 'Parch', 동반한 부모, 자식
 'Ticket', 티켓번호
 'Fare', 요금
 'Cabin', 객실번호
 'Embarked'] 승선한 항구명 C = 쉐부로, Q = 퀸즈타운, S = 사우스햄톤
+self._test_id = test['PassengerId']
 """
 class Service:
     def __init__(self):
-        self._model = Model()
+        self._this = Model()
+
 
     def new_model(self, param):
-        model = self._model
-        model.context='./data'
-        model.fname=param
-        return pd.read_csv(model.context+'/'+model.fname)
+        this = self._this
+        this.context='./data'
+        this.fname=param
+        return pd.read_csv(this.context+'/'+this.fname)
+
+
+    def create_train(self, this):
+        return this.train.drop('Survived', axis=1)
+
+
+    def create_dummy(self, this):
+        return this.train['Survived']
+
+
+    def create_kfold(self):
+        return KFold(n_splits=10, shuffle=True, random_state=0)
+
 
     @staticmethod
-    def null_sum(param) -> int:
-        return param.isnull().sum()
+    def drop_feature(this, feature) -> object:
+        this.train = this.train.drop([feature], axis=1)
+        this.test = this.test.drop([feature], axis=1)
+        return this
+
 
     @staticmethod
-    def drop_feature(param, feature) -> []:
-        param = param.drop([feature], axis=1)
-        return param
+    def embarked_norminal(this) -> object:
+        this.train = this.train.fillna({"Embarked": "S"})
+        this.train['Embarked'] = this.train['Embarked'].map({"S": 1, "C": 2, "Q": 3})
+        this.test = this.test.fillna({"Embarked": "S"})
+        this.test['Embarked'] = this.test['Embarked'].map({"S": 1, "C": 2, "Q": 3})
+        return this
+
 
     @staticmethod
-    def embarked_norminal(param) -> object:
-        print('>>>> embarked_norminal')
-        # c_city = train[train['Embarked'] == 'C'].shape[0]
-        # s_city = train[train['Embarked'] == 'S'].shape[0]
-        # q_city = train[train['Embarked'] == 'Q'].shape[0]
-        dframe = param.fillna({"Embarked": "S"})
-        city_mapping = {"S": 1, "C": 2, "Q": 3}
-        dframe['Embarked'] = dframe['Embarked'].map(city_mapping)
-        return dframe
+    def fareBand_norminal(this) -> object:
+        this.train = this.train.fillna({"FareBand": 1})
+        this.test = this.test.fillna({"FareBand": 1})
+        return this
+
 
     @staticmethod
-    def title_norminal(param) -> object:
-        dframe = param
-        print('>>>> title_norminal')
-
-        for dataset in dframe:
+    def title_nominal(this) -> []:
+        combine = [this.train, this.test]
+        for dataset in combine:
             dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
 
-        for dataset in dframe:
+
+        for dataset in combine:
             dataset['Title'] \
                 = dataset['Title'].replace(['Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Jonkheer', 'Dona'], 'Rare')
             dataset['Title'] \
                 = dataset['Title'].replace(['Countess', 'Lady', 'Sir'], 'Royal')
             dataset['Title'] \
-                = dataset['Title'].replace(['Mile', 'Ms'], 'Miss')
+                = dataset['Title'].replace('Mlle', 'Miss')
+            dataset['Title'] \
+                = dataset['Title'].replace('Ms', 'Miss')
+            dataset['Title'] \
+                = dataset['Title'].replace('Mme', 'Mrs')
+        this.train[['Title', 'Survived']].groupby(['Title'], as_index=False).mean()
+        """
+            Title  Survived
+        0  Master  0.575000
+        1    Miss  0.701087
+        2      Mr  0.156673
+        3     Mrs  0.793651
+        4      Ms  1.000000
+        5    Rare  0.250000
+        6   Royal  1.000000
+        """
 
-        dframe[['Title', 'Survived']].groupby(['Title'], as_index=False).mean()
-        # print(train[['Title','Survived']].groupby(['Title'], as_index=False).mean())
-        title_mapping = {'Mr': 1, 'Miss': 2, 'Mrs': 3, 'Master': 4, 'Royal': 5, 'Rare': 6, 'Mne': 7}
-        for dataset in dframe:
+
+        title_mapping = {'Mr': 1, 'Miss': 2, 'Mrs': 3, 'Master': 4, 'Royal': 5, 'Rare': 6}
+        for dataset in combine:
             dataset['Title'] = dataset['Title'].map(title_mapping)
             dataset['Title'] = dataset['Title'].fillna(0)
-        return dframe
+        this.train = this.train
+        this.test = this.test
+        return this
+
 
     @staticmethod
-    def sex_norminal(param) -> []:
-        dframe = param
-        sex_mapping = {'male': 0, 'female': 1}
-        for dataset in dframe:
+    def sex_nominal(this) -> []:
+        combine = [this.train, this.test]
+        sex_mapping = {"male": 0, "female": 1}
+        for dataset in combine:
             dataset['Sex'] = dataset['Sex'].map(sex_mapping)
+        this.train = this.train
+        this.test = this.test
+        return this
 
-        return param
 
-    @staticmethod # 지도학습.
-    def age_ordinal(param) -> object:
-        dframe = param
-        dframe['Age'] = dframe['Age'].fillna(-0.5) # 가장 많이 탄 나이대로 하는 경향이 있음. fillna 결측값 대체하기
+    @staticmethod
+    def age_ordinal(this) -> object:
+        train = this.train
+        test = this.test
+        train['Age'] = train['Age'].fillna(-0.5)
+        test['Age'] = test['Age'].fillna(-0.5)
         bins = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
         labels = ['Unknown', 'Baby', 'Child', 'Teenager', 'Student', 'Young Adult', 'Adult', 'Senior']
-# 왜 나이를 붙였는가 분석자료를 만드는 것
-        # 인공지능에게 나의 정보를 넘겼을때 '죽음'이라는 단답을 리턴하는 것이 아니라, 차트, *데이터 시각화* 하여 그것에 대한 증명을 보여줘야 한다.
-        dframe['AgeGroup'] = pd.cut(dframe['Age'], bins, labels=labels)
+        train['AgeGroup'] = pd.cut(train['Age'], bins, labels=labels)
+        test['AgeGroup'] = pd.cut(test['Age'], bins, labels=labels)
         age_title_mapping = {0: 'Unknown', 1: 'Baby', 2: 'Child',
                              3: 'Teenager', 4: 'Student', 5: 'Young Adult', 6: 'Adult', 7: 'Senior'}
-        for x in range(len(param['AgeGroup'])):
-            if dframe['AgeGroup'][x] == 'Unknown':
-                dframe['AgeGroup'][x] = age_title_mapping[dframe['Title'][x]]
-	# 코드와 테스트 코드를 두가지 작성하는 것 지도학습의 특징.
+        for x in range(len(train['AgeGroup'])):
+            if train['AgeGroup'][x] == 'Unknown':
+                train['AgeGroup'][x] = age_title_mapping[train['Title'][x]]
+        for x in range(len(test['AgeGroup'])):
+            if test['AgeGroup'][x] == 'Unknown':
+                test['AgeGroup'][x] = age_title_mapping[test['Title'][x]]
+
 
         age_mapping = {'Unknown': 0, 'Baby': 1, 'Child': 2,
                        'Teenager': 3, 'Student': 4, 'Young Adult': 5, 'Adult': 6, 'Senior': 7}
 
-        dframe['AgeGroup'] = dframe['AgeGroup'].map(age_mapping)
-        return dframe
+
+        train['AgeGroup'] = train['AgeGroup'].map(age_mapping)
+        test['AgeGroup'] = test['AgeGroup'].map(age_mapping)
+        this.train = train
+        this.test = test
+        return this
+
 
     @staticmethod
-    def fare_ordinal(param) -> []:
-        param['FareBand'] = pd.qcut(param['Fare'], 4, labels={1, 2, 3, 4})
-        return param
+    def fare_ordinal(this) -> []:
+        this.train['FareBand'] = pd.qcut(this['Fare'], 4, labels={1, 2, 3, 4})
+        this.test['FareBand'] = pd.qcut(this['Fare'], 4, labels={1, 2, 3, 4})
+        return this
+
 
     # 검증 알고리즘 작성
 
-    def hook_test(self, model, dummy):
-        print('KNN 활용한 검증 정확도 {} %'.format(self.accuracy_by_knn(model, dummy)))
-        print('결정트리 활용한 검증 정확도 {} %'.format(self.accuracy_by_dtree(model, dummy)))
-        print('랜덤포리스트 활용한 검증 정확도 {} %'.format(self.accuracy_by_rforest(model, dummy)))
-        print('나이브베이즈 활용한 검증 정확도 {} %'.format(self.accuracy_by_nb(model, dummy)))
-        print('SVM 활용한 검증 정확도 {} %'.format(self.accuracy_by_svm(model, dummy)))
 
-    @staticmethod
-    def create_k_fold():
-        k_fold = KFold(n_splits=10, shuffle=True, random_state=0)
-        return k_fold # test값을 10개로 쪼갠다 / 섞는다 / 한번 사용한 값은 사용하지 않는다.
+    def accuracy_by_knn(self, this):
+        score = cross_val_score(KNeighborsClassifier(n_neighbors=13),
+                                this.train,
+                                this.dummy,
+                                cv=this._kfold,
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
 
-    @staticmethod
-    def create_random_variables(param, X_feature, Y_features) -> []: # 시험 문제를 만든다.
-        the_X_feature = X_feature # 디멘션을 줄여서 적은 컬럼만 타켓으로 한다.
-        the_Y_feature = Y_features
-        train2, test2 = train_test_split(param, test_size=0.3, random_state=0) # random_state 0은 이전에 했던 문제라도 출제한다 0~1 / 0.3은 전체의 30%에서 문제출제
-        train_X = train2[the_X_feature]
-        train_Y = train2[the_Y_feature]
-        test_X = test2[the_X_feature]
-        test_Y = test2[the_Y_feature]
-        return [train_X, train_Y, test_X, test_Y]
 
-    def accuracy_by_knn(self, model, dummy):
-        clf = KNeighborsClassifier(n_neighbors=13)
-        scoring = 'accuracy'
-        k_fold = self.create_k_fold()
-        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
-        accuracy = round(np.mean(score) * 100, 2)
-        return accuracy
+    def accuracy_by_dtree(self,this):
+        score = cross_val_score(DecisionTreeClassifier(),
+                                this.train,
+                                this.dummy,
+                                cv=this.kfold,
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
 
-    def accuracy_by_dtree(self, model, dummy): # accuracy return은 string 값이다.
-        clf = DecisionTreeClassifier() # 검증타겟
-        scoring = 'accuracy'
-        k_fold = self.create_k_fold()
-        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring) # 프로퍼티에 kfold를 넣어라/ 데이터세트 1개 / accuracy는 정확도
-        accuracy = round(np.mean(score) * 100, 2)
-        return accuracy
 
-    def accuracy_by_rforest(self, model, dummy):
-        clf = RandomForestClassifier(n_estimators=13)  # n_이 나오면 무조건 숫자 estimator = 측정기 수(dtree 수)
-        scoring = 'accuracy'
-        k_fold = self.create_k_fold()
-        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
-        accuracy = round(np.mean(score) * 100, 2)
-        return accuracy
+    def accuracy_by_rforest(self,this):
+        score = cross_val_score(RandomForestClassifier(n_estimators=13),
+                                this.train,
+                                this.dummy,
+                                cv=this.kfold,
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
 
-    def accuracy_by_nb(self, model, dummy):
-        clf = GaussianNB()
-        scoring = 'accuracy'
-        k_fold = self.create_k_fold()
-        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
-        accuracy = round(np.mean(score) * 100, 2)
-        return accuracy
 
-    def accuracy_by_svm(self, model, dummy):
+    def accuracy_by_nb(self, this):
+        score = cross_val_score(GaussianNB(),
+                                this.train,
+                                this.dummy,
+                                cv=this.kfold,
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
+
+
+    def accuracy_by_svm(self, this):
+        score = cross_val_score(SVC(),
+                                this.train,
+                                this.dummy,
+                                cv=this.kfold,
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
+
+
+    def submit(self, this):
+        train = this.train
+        test = this.test
+        dummy = this.dummy
+        id = this.id
+        context = this.context
         clf = SVC()
-        scoring = 'accuracy'
-        k_fold = self.create_k_fold()
-        score = cross_val_score(clf, model, dummy, cv=k_fold, n_jobs=1, scoring=scoring)
-        accuracy = round(np.mean(score) * 100, 2)
-        return accuracy
-
-    """"@staticmethod
-    def create_model_dummy(train): # 모델(프로그램) = 머신
-        model = train.drop('Survived', axis = 1) # axis = 1 세로축 / 답만 모르는 부분
-        dummy = train['Survived'] # 답만 알고 있는 부분
-        return [model, dummy]"""
-
+        clf.fit(train, dummy)
+        prediction = clf.predict(test)
+        submission = pd.DataFrame(
+            {'PassengerId': id,
+             'Survived': prediction}
+        )
+        print(submission.head())
+        submission.to_csv(context + '/submission.csv', index=False)

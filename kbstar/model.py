@@ -4,7 +4,7 @@ class Model:
         self._fname = None
         self._train = None
         self._test = None
-        self._testId = None
+        self._id = None
 
     @property
     def context(self) -> str: return self._context
@@ -31,7 +31,7 @@ class Model:
     def test(self, test): self._test = test
 
     @property
-    def testId(self) -> object: return self._testId
+    def id(self) -> object: return self._id
 
-    @testId.setter
-    def testId(self, testId): self._testId = testId
+    @id.setter
+    def id(self, id): self._id = id
