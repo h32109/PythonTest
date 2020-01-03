@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f458b632-28a0-4304-9bdb-f309381c344b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/kbstar/view.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mnist/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mnist/controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mnist/service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tfcalc/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tfcalc/controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tfcalc/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tfcalc/service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kbstar/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kbstar/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kbstar/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/kbstar/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/titanic/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/titanic/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/titanic/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/titanic/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/titanic/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/titanic/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +43,7 @@
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -52,7 +51,7 @@
       <recent name="C:\Users\bit\PycharmProjects\PythonTest" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.__init__">
+  <component name="RunManager" selected="Python.__init__ (3)">
     <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="PythonTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -66,6 +65,48 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kbstar/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__init__ (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="PythonTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tfcalc" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tfcalc/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__init__ (3)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="PythonTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mnist" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mnist/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -97,6 +138,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.__init__ (3)" />
+        <item itemvalue="Python.__init__ (2)" />
         <item itemvalue="Python.__init__" />
         <item itemvalue="Python.__init__ (1)" />
       </list>
@@ -128,26 +171,30 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="739" height="166" key="GridCell.Tab.0.bottom" timestamp="1577319014959">
+    <state width="738" height="166" key="GridCell.Tab.0.bottom" timestamp="1577760205590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014959" />
-    <state width="739" height="166" key="GridCell.Tab.0.center" timestamp="1577319014958">
+    <state width="738" height="166" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577760205590" />
+    <state width="738" height="166" key="GridCell.Tab.0.center" timestamp="1577760205590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
-    <state width="739" height="166" key="GridCell.Tab.0.left" timestamp="1577319014958">
+    <state width="738" height="166" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577760205590" />
+    <state width="738" height="166" key="GridCell.Tab.0.left" timestamp="1577760205590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
-    <state width="739" height="166" key="GridCell.Tab.0.right" timestamp="1577319014958">
+    <state width="738" height="166" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577760205590" />
+    <state width="738" height="166" key="GridCell.Tab.0.right" timestamp="1577760205590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="739" height="166" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577319014958" />
-    <state x="657" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1577318660426">
+    <state width="738" height="166" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577760205590" />
+    <state x="518" y="128" key="SettingsEditor" timestamp="1577405933818">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="657" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577318660426" />
+    <state x="518" y="128" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577405933818" />
+    <state x="657" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1578009669030">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="657" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578009669030" />
     <state x="764" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577319823862">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
